@@ -1,33 +1,93 @@
-\ Responda os exercícios aqui. Lembre-se de remover qualquer código fora de
-\ definições antes de enviar a resposta final.
 
-\ ==============================================================================
-\ DEFINIÇÕES
-\ ==============================================================================
+: sort-two 2dup > if swap then ;
+: sort-three
+	>r
+	sort-two
+	r>
+	sort-two
+	>r
+	sort-two
+	r>
+;
+: dots 0 do [char] . emit loop ;
+: **
+	>r
+	1
+	r> 0 do
+		over *
+	loop
+	nip
+;
+: 3dup 2 pick 2 pick 2 pick ;
+: put 0 do swap loop ;
+: reverse 0 do i roll loop ;
+: drop-many 0 do drop loop ;
+: drop-at roll drop ;
+: pop-at roll ;
+: print-change
+	100 /mod swap over . ." nota(s) de 100" cr swap drop
+	50  /mod swap over . ." nota(s) de 50"  cr swap drop
+	20  /mod swap over . ." nota(s) de 20"  cr swap drop
+	10  /mod swap over . ." nota(s) de 10"  cr swap drop
+	5   /mod swap over . ." nota(s) de 5"   cr swap drop
+	2   /mod swap over . ." nota(s) de 2"   cr swap drop
+	1   /mod swap over . ." moeda(s) de 1"  cr
+	2drop
+;
+: max-n 1- 0 do max loop ;
+: reset depth 0 do drop loop ;
 
-: sort-two ;
-: sort-three ;
-: dots ;
-: ** ;
-: 3dup ;
-: put ;
-: reverse` ;
-: drop-many ;
-: drop-at ;
-: pop-at ;
-: print-change ;
-: max-n ;
-: reset ;
-: all-positive ;
-: all-sorted ;
-: filter-positive ;
+variable tmp-flag
+variable tmp-n
+create tmp-buf 1024 cells allot
+variable tmp-count
 
+: all-positive
+	-1 tmp-flag !
+	depth 0 do
+		dup 0< if
+			0 tmp-flag !
+		then
+		drop
+	loop
+	tmp-flag @
+;
 
-\ ==============================================================================
-\ TESTES
-\ ==============================================================================
-\ Não esqueça de apagar ou comentar código fora das definições antes de enviar 
-\ a submissão final ou rodar os testes usando o pytest.
+: all-sorted
+	depth tmp-n !
+	tmp-n @ 1 <= if
+		tmp-n @ 0 do drop loop
+		-1 exit
+	then
 
-1 2 3 sort-two .s cr \ deve imprimir "1 2 3"
-3 2 1 sort-two .s cr \ deve imprimir "2 3 1"
+	-1 tmp-flag !
+	tmp-n @ 1- 0 do
+		i 1+ pick i pick > if
+			0 tmp-flag !
+		then
+	loop
+
+	tmp-n @ 0 do drop loop
+	tmp-flag @
+;
+
+: filter-positive
+	depth tmp-n !
+	0 tmp-count !
+
+	tmp-n @ 0 do
+		tmp-n @ 1- i - pick
+		dup 0>= if
+			tmp-count @ cells tmp-buf + !
+			1 tmp-count +!
+		else
+			drop
+		then
+	loop
+
+	tmp-n @ 0 do drop loop
+
+	tmp-count @ 0 do
+		i cells tmp-buf + @
+	loop
+;

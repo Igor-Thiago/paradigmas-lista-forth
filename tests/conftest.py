@@ -10,7 +10,7 @@ import os
 ANSWER_KEY = os.environ.get("ANSWER_KEY", "auto").lower()
 STACK_RE  = re.compile(r"<\d+> (.*)$", re.MULTILINE)
 CMD = ["gforth", "FILE", "-e", "bye"]
-CMD = ["flatpak", "run", "--filesystem=host","org.gforth.gforth", "FILE", "-e", "bye"]
+# CMD = ["flatpak", "run", "--filesystem=host","org.gforth.gforth", "FILE", "-e", "bye"]
 
 BASE_PATH = Path(__file__).parent.parent 
 

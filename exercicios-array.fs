@@ -1,9 +1,3 @@
-\ Responda os exercícios aqui. Lembre-se de remover qualquer código fora de
-\ definições antes de enviar a resposta final.
-
-\ ==============================================================================
-\ DEFINIÇÕES
-\ ==============================================================================
 
 : get-number ( -- n )
     pad 20 accept pad swap  ( lê até 20 caracteres e deixa addr n na pilha )
@@ -14,27 +8,78 @@
     then 
 ;
 
-: get ( i -- n ) ;
-: set ( i n -- ) ;
-: read-array ( -- ) ;
-: print-array ( -- ) ;
-: add-array ( -- sum ) ;
-: max-array ( -- max ) ;
-: min-array ( -- min ) ;
-: average-array ( -- avg ) ;
+create buf 1000 cells allot
+variable size
+0 size !
 
+: push ( a -- )
+    size @ cells buf + !
+    1 size +!
+;
 
-\ ==============================================================================
-\ TESTES
-\ ==============================================================================
-\ Não esqueça de apagar ou comentar código fora das definições antes de enviar 
-\ a submissão final ou rodar os testes usando o pytest.
+: pop ( -- a )
+    -1 size +!
+    size @ cells buf + @
+;
 
-read-array 
-." Números: " print-array cr
-." Tamanho: " size @ . cr
-." Soma: " add-array . cr
-." Max: " max-array . cr
-." Media: " average-array F. cr
+: get ( i -- n )
+    cells buf + @
+;
 
-bye
+: set ( a i -- )
+    cells buf + !
+;
+
+: read-array ( -- )
+    begin
+        get-number dup
+    while
+        push
+    repeat
+    drop
+;
+
+: print-array ( -- )
+    size @ 0 do
+        i get .
+    loop
+;
+
+: add-array ( -- sum )
+    0
+    size @ 0 do
+        i get +
+    loop
+;
+
+: max-array ( -- max )
+    size @ 0= if
+        0 exit
+    then
+
+    0 get
+    size @ 1 do
+        i get max
+    loop
+;
+
+: min-array ( -- min )
+    size @ 0= if
+        0 exit
+    then
+
+    0 get
+    size @ 1 do
+        i get min
+    loop
+;
+
+: average-array ( F: -- avg )
+    size @ 0= if
+        0e exit
+    then
+
+    add-array s>f
+    size @ s>f
+    f/
+;
