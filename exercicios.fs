@@ -80,14 +80,24 @@ variable tmp-count
 		-1 exit
 	then
 
+	\ copia a pilha para o buffer na ordem bottom -> top
+	tmp-n @ 0 ?do
+		tmp-n @ 1- i - pick
+		i cells tmp-buf + !
+	loop
+
+	\ limpa a pilha original
+	tmp-n @ 0 ?do drop loop
+
 	-1 tmp-flag !
 	tmp-n @ 1- 0 ?do
-		i 1+ pick i pick > if
+		i cells tmp-buf + @
+		i 1+ cells tmp-buf + @
+		> if
 			0 tmp-flag !
 		then
 	loop
 
-	tmp-n @ 0 ?do drop loop
 	tmp-flag @
 ;
 
