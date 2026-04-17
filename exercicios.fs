@@ -26,7 +26,13 @@ variable tmp-count
 
 : 3dup 2 pick 2 pick 2 pick ;
 
-: put roll ;
+: put
+	>r
+	r@ 0 ?do
+		swap
+	loop
+	r> drop
+;
 
 : reverse
 	dup tmp-n !
