@@ -24,12 +24,16 @@
 : put roll ;
 
 : reverse
-  dup 1 > if
-    dup 1- 0 ?do
-      dup 1- i - roll
-    loop
-  then
+  dup tmp-n !
   drop
+  tmp-n @ 0 ?do
+    i pick
+    i cells tmp-buf + !
+  loop
+  tmp-n @ 0 ?do drop loop
+  tmp-n @ 0 ?do
+    i cells tmp-buf + @
+  loop
 ;
 
 : drop-many 0 ?do drop loop ;
