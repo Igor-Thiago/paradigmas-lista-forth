@@ -1,4 +1,3 @@
-
 : sort-two 2dup > if swap then ;
 : sort-three
 	>r
@@ -10,14 +9,14 @@
 	r>
 ;
 : dots 0 do [char] . emit loop ;
-: **
-	>r
-	1
-	r> 0 do
-		over *
-	loop
-	nip
+
+: ** ( base expoente -- resultado )
+  1 swap 0 ?do
+    over *
+  loop
+  nip
 ;
+
 : 3dup 2 pick 2 pick 2 pick ;
 : put 0 do swap loop ;
 : reverse 0 do i roll loop ;
