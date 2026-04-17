@@ -26,7 +26,15 @@ variable tmp-count
 
 : 3dup 2 pick 2 pick 2 pick ;
 
-: put  0 ?do swap loop ;
+: put
+	tmp-n !
+	begin
+		tmp-n @ 0>
+	while
+		swap
+		-1 tmp-n +!
+	repeat
+;
 
 : reverse
 	dup tmp-n !
