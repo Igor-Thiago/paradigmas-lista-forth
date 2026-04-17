@@ -13,10 +13,10 @@
 : dots 0 do [char] . emit loop ;
 
 : ** ( base expoente -- resultado )
-  1 swap 0 ?do
-    over *
-  loop
-  nip
+	1 swap 0 ?do
+		over *
+	loop
+	nip
 ;
 
 : 3dup 2 pick 2 pick 2 pick ;
@@ -24,16 +24,16 @@
 : put roll ;
 
 : reverse
-  dup tmp-n !
-  drop
-  tmp-n @ 0 ?do
-    i pick
-    i cells tmp-buf + !
-  loop
-  tmp-n @ 0 ?do drop loop
-  tmp-n @ 0 ?do
-    i cells tmp-buf + @
-  loop
+	dup tmp-n !
+	drop
+	tmp-n @ 0 ?do
+		i pick
+		i cells tmp-buf + !
+	loop
+	tmp-n @ 0 ?do drop loop
+	tmp-n @ 0 ?do
+		i cells tmp-buf + @
+	loop
 ;
 
 : drop-many 0 ?do drop loop ;
