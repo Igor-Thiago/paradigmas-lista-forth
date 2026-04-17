@@ -1,5 +1,6 @@
 variable tmp-flag
 variable tmp-n
+variable put-n
 create tmp-buf 1024 cells allot
 variable tmp-count
 
@@ -27,11 +28,10 @@ variable tmp-count
 : 3dup 2 pick 2 pick 2 pick ;
 
 : put
-	>r
-	r@ 0 ?do
+	put-n !
+	put-n @ 0 ?do
 		swap
 	loop
-	r> drop
 ;
 
 : reverse
