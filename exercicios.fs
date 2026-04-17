@@ -1,4 +1,5 @@
 : sort-two 2dup > if swap then ;
+
 : sort-three
 	>r
 	sort-two
@@ -8,6 +9,7 @@
 	sort-two
 	r>
 ;
+
 : dots 0 do [char] . emit loop ;
 
 : ** ( base expoente -- resultado )
@@ -18,11 +20,24 @@
 ;
 
 : 3dup 2 pick 2 pick 2 pick ;
-: put 0 do swap loop ;
-: reverse 0 do i roll loop ;
-: drop-many 0 do drop loop ;
+
+: put 0 ?do swap loop ;
+
+: reverse
+  dup 1 > if
+    dup 1- 0 ?do
+      dup 1- i - roll
+    loop
+  then
+  drop
+;
+
+: drop-many 0 ?do drop loop ;
+
 : drop-at roll drop ;
+
 : pop-at roll ;
+
 : print-change
 	100 /mod swap over . ." nota(s) de 100" cr swap drop
 	50  /mod swap over . ." nota(s) de 50"  cr swap drop
@@ -33,7 +48,9 @@
 	1   /mod swap over . ." moeda(s) de 1"  cr
 	2drop
 ;
-: max-n 1- 0 do max loop ;
+
+: max-n 1- 0 ?do max loop ;
+
 : reset depth 0 do drop loop ;
 
 variable tmp-flag
@@ -43,7 +60,7 @@ variable tmp-count
 
 : all-positive
 	-1 tmp-flag !
-	depth 0 do
+	depth 0 ?do
 		dup 0< if
 			0 tmp-flag !
 		then
@@ -55,18 +72,18 @@ variable tmp-count
 : all-sorted
 	depth tmp-n !
 	tmp-n @ 1 <= if
-		tmp-n @ 0 do drop loop
+		tmp-n @ 0 ?do drop loop
 		-1 exit
 	then
 
 	-1 tmp-flag !
-	tmp-n @ 1- 0 do
+	tmp-n @ 1- 0 ?do
 		i 1+ pick i pick > if
 			0 tmp-flag !
 		then
 	loop
 
-	tmp-n @ 0 do drop loop
+	tmp-n @ 0 ?do drop loop
 	tmp-flag @
 ;
 
