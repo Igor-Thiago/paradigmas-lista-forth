@@ -1,3 +1,8 @@
+variable tmp-flag
+variable tmp-n
+create tmp-buf 1024 cells allot
+variable tmp-count
+
 : sort-two 2dup > if swap then ;
 
 : sort-three
@@ -56,11 +61,6 @@
 : max-n 1- 0 ?do max loop ;
 
 : reset depth 0 do drop loop ;
-
-variable tmp-flag
-variable tmp-n
-create tmp-buf 1024 cells allot
-variable tmp-count
 
 : all-positive
 	-1 tmp-flag !
