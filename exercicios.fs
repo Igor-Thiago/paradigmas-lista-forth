@@ -28,12 +28,22 @@ variable tmp-count
 
 : put
 	tmp-n !
-	begin
-		tmp-n @ 0>
-	while
-		swap
-		-1 tmp-n +!
-	repeat
+	tmp-flag !
+
+	tmp-n @ 0 ?do
+		i pick
+		i cells tmp-buf + !
+	loop
+
+	tmp-n @ 0 ?do
+		drop
+	loop
+
+	tmp-flag @
+
+	tmp-n @ 0 ?do
+		tmp-n @ 1- i - cells tmp-buf + @
+	loop
 ;
 
 : reverse
