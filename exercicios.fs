@@ -21,15 +21,19 @@
 
 : 3dup 2 pick 2 pick 2 pick ;
 
-: put 0 ?do swap loop ;
+: put roll ;
 
 : reverse
-  dup 1 > if
-    dup 1- 0 ?do
-      dup 1- i - roll
-    loop
-  then
+  dup tmp-n !
   drop
+  tmp-n @ 0 ?do
+    i pick
+    i cells tmp-buf + !
+  loop
+  tmp-n @ 0 ?do drop loop
+  tmp-n @ 0 ?do
+    i cells tmp-buf + @
+  loop
 ;
 
 : drop-many 0 ?do drop loop ;
@@ -70,21 +74,21 @@ variable tmp-count
 ;
 
 : all-sorted
-	depth tmp-n !
-	tmp-n @ 1 <= if
-		tmp-n @ 0 ?do drop loop
-		-1 exit
-	then
+  depth tmp-n !
+  tmp-n @ 1 <= if
+    tmp-n @ 0 ?do drop loop
+    -1 exit
+  then
 
-	-1 tmp-flag !
-	tmp-n @ 1- 0 ?do
-		i 1+ pick i pick > if
-			0 tmp-flag !
-		then
-	loop
+  -1 tmp-flag !
+  tmp-n @ 1- 0 ?do
+    i 1+ pick i pick > if
+      0 tmp-flag !
+    then
+  loop
 
-	tmp-n @ 0 ?do drop loop
-	tmp-flag @
+  tmp-n @ 0 ?do drop loop
+  tmp-flag @
 ;
 
 : filter-positive
