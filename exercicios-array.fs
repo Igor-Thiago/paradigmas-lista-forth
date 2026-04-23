@@ -1,11 +1,15 @@
+variable size
+0 size !
+
+variable buf 1000 cells allot
 
 : get-number ( -- n )
-    pad 20 accept pad swap  ( lê até 20 caracteres e deixa addr n na pilha )
-    s>number? if            ( converte string para número de dupla precisão e uma flag )
-        drop                ( remove a parte de dupla precisão, deixando apenas a parte baixa na pilha )
+    pad 20 accept pad swap
+    s>number? if
+        drop
     else 
-        2drop 0             ( limpa a pilha em caso de falha e retorna 0 )
-    then 
+        2drop 0
+    then
 ;
 
 : push ( a -- )
