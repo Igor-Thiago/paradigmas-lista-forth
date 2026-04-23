@@ -87,7 +87,7 @@ variable tmp-count
 			0 tmp-flag !
 		then
 		drop
-	loopw
+	loop
 	tmp-flag @
 ;
 
