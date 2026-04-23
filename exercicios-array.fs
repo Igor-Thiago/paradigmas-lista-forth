@@ -8,10 +8,6 @@
     then 
 ;
 
-create buf 1000 cells allot
-variable size
-0 size !
-
 : push ( a -- )
     size @ cells buf + !
     1 size +!
@@ -22,7 +18,7 @@ variable size
     size @ cells buf + @
 ;
 
-: get ( i -- n )
+: get ( i -- a )
     cells buf + @
 ;
 
@@ -30,56 +26,45 @@ variable size
     cells buf + !
 ;
 
-: read-array ( -- )
-    begin
-        get-number dup
-    while
-        push
-    repeat
-    drop
-;
-
 : print-array ( -- )
-    size @ 0 do
+    size @ 0 ?do
         i get .
     loop
 ;
 
-: add-array ( -- sum )
+: array-sum ( -- sum )
     0
-    size @ 0 do
+    size @ 0 ?do
         i get +
     loop
 ;
 
-: max-array ( -- max )
-    size @ 0= if
-        0 exit
-    then
-
+: array-max ( -- max )
     0 get
-    size @ 1 do
+    size @ 1 ?do
         i get max
     loop
 ;
 
-: min-array ( -- min )
-    size @ 0= if
-        0 exit
-    then
-
+: array-min ( -- min )
     0 get
-    size @ 1 do
+    size @ 1 ?do
         i get min
     loop
 ;
 
-: average-array ( F: -- avg )
-    size @ 0= if
-        0e exit
-    then
-
-    add-array s>f
+: array-average ( F: -- avg )
+    array-sum s>f
     size @ s>f
     f/
+;
+
+: read-array ( -- )
+    0 size !
+    begin
+        get-number dup 0<>
+    while
+        push
+    repeat
+    drop
 ;
